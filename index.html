@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Career Session — Away Techs</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#0a5c45;--green-mid:#0f7a5a;--green-light:#e6f5ef;--green-pale:#f0faf5;
+  --gold:#c8922a;--gold-light:#fdf3e3;
+  --ink:#0d1f1a;--ink-mid:#2d4a42;--ink-light:#5a7a70;--ink-hint:#9ab8ae;
+  --white:#ffffff;--off:#f8fdf9;--border:#d4e8df;
+  --r:10px;--rl:16px;--rxl:24px
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--ink);line-height:1.6;min-height:100vh}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(248,253,249,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 5vw}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--green);letter-spacing:-0.5px}
+.logo span{color:var(--gold)}
+.nav-cta{background:var(--green);color:var(--white);padding:8px 20px;border-radius:var(--r);font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--green-mid)}
+
+/* HERO */
+.hero{background:var(--green);color:var(--white);padding:80px 5vw 0;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(15,122,90,.5) 0%,transparent 70%)}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:end;position:relative;z-index:1}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:18px}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(36px,5vw,58px);font-weight:800;line-height:1.05;letter-spacing:-1.5px;margin-bottom:22px}
+.hero h1 em{font-style:normal;color:#7de0ba}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.7);max-width:480px;line-height:1.7;margin-bottom:32px}
+.hero-proof{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px}
+.company-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.8)}
+.hero-stats{display:flex;gap:32px;padding:24px 0;border-top:1px solid rgba(255,255,255,.12)}
+.stat-num{font-family:'Syne',sans-serif;font-size:28px;font-weight:700}
+.stat-label{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
+.hero-card{background:var(--white);border-radius:var(--rxl) var(--rxl) 0 0;padding:36px 32px 0;box-shadow:0 -20px 60px rgba(0,0,0,.15)}
+.hero-card-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.hero-card-sub{font-size:13px;color:var(--ink-light);margin-bottom:24px}
+
+/* SESSION CARDS */
+.sessions-section{background:var(--white);padding:80px 5vw}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--green-mid);margin-bottom:10px}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(26px,3.5vw,38px);font-weight:700;color:var(--ink);letter-spacing:-0.5px;margin-bottom:8px}
+.section-sub{font-size:16px;color:var(--ink-light);max-width:560px;margin-bottom:48px}
+.sessions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.session-card{border:1.5px solid var(--border);border-radius:var(--rl);padding:28px 24px;cursor:pointer;transition:all .25s;background:var(--white);position:relative;overflow:hidden}
+.session-card::before{content:'';position:absolute;inset:0;background:var(--green-light);opacity:0;transition:opacity .25s}
+.session-card:hover{border-color:var(--green-mid);transform:translateY(-3px);box-shadow:0 12px 32px rgba(10,92,69,.1)}
+.session-card:hover::before{opacity:1}
+.session-card.popular{border-color:var(--green);border-width:2px}
+.popular-badge{position:absolute;top:16px;right:16px;background:var(--green);color:var(--white);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+.session-card *{position:relative;z-index:1}
+.session-flag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.session-duration{font-family:'Syne',sans-serif;font-size:32px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.session-price{font-size:22px;font-weight:500;color:var(--green);margin-bottom:20px}
+.session-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.session-features li{font-size:13px;color:var(--ink-mid);display:flex;align-items:flex-start;gap:8px}
+.session-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+.session-btn{width:100%;padding:12px;background:var(--green);color:var(--white);border:none;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;transition:background .2s;font-family:'DM Sans',sans-serif}
+.session-btn:hover{background:var(--green-mid)}
+.session-card.popular .session-btn{background:var(--gold)}
+.session-card.popular .session-btn:hover{background:#b07e22}
+
+/* WHAT'S INCLUDED */
+.included-section{background:var(--off);padding:80px 5vw}
+.includes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:48px}
+.include-item{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);padding:24px 20px}
+.include-icon{width:40px;height:40px;background:var(--green-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
+.include-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.include-desc{font-size:13px;color:var(--ink-light);line-height:1.6}
+
+/* COMPANIES TICKER */
+.companies-section{background:var(--green);padding:64px 0;text-align:center;overflow:hidden}
+.companies-header{padding:0 5vw;margin-bottom:40px}
+.companies-title{font-family:'Syne',sans-serif;font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--white);margin-bottom:10px}
+.companies-sub{font-size:14px;color:rgba(255,255,255,.55)}
+.ticker-wrapper{position:relative;width:100%;overflow:hidden}
+.ticker-wrapper::before,.ticker-wrapper::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.ticker-wrapper::before{left:0;background:linear-gradient(to right,var(--green),transparent)}
+.ticker-wrapper::after{right:0;background:linear-gradient(to left,var(--green),transparent)}
+.ticker-track{display:flex;gap:0;width:max-content}
+.ticker-row{display:flex;gap:0;animation:ticker-scroll 28s linear infinite}
+.ticker-row:hover{animation-play-state:paused}
+@keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.company-logo-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:var(--rl);padding:14px 24px;margin:0 10px;white-space:nowrap;transition:background .2s,border-color .2s;cursor:default;flex-shrink:0}
+.company-logo-card:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3)}
+.company-logo-card img{width:28px;height:28px;object-fit:contain;border-radius:6px;background:white;padding:3px;flex-shrink:0}
+.company-logo-card span{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:rgba(255,255,255,.9);letter-spacing:.3px}
+.ticker-label{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 16px;font-size:12px;color:rgba(255,255,255,.6);margin-bottom:24px;letter-spacing:1px;text-transform:uppercase;font-weight:500}
+
+/* BOOKING FORM */
+.booking-section{background:var(--white);padding:80px 5vw;scroll-margin-top:80px}
+#book{scroll-margin-top:80px}
+.booking-layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 540px;gap:60px;align-items:start}
+.booking-why{position:sticky;top:100px}
+.booking-why-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:700;color:var(--ink);margin-bottom:16px;line-height:1.2}
+.booking-why-sub{font-size:15px;color:var(--ink-light);margin-bottom:32px;line-height:1.7}
+.testimonial-card{background:var(--green-pale);border:1px solid var(--border);border-radius:var(--rl);padding:24px;margin-bottom:16px}
+.testimonial-text{font-size:14px;color:var(--ink-mid);line-height:1.7;margin-bottom:14px;font-style:italic}
+.testimonial-author{display:flex;align-items:center;gap:10px}
+.t-avatar{width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--white)}
+.t-name{font-size:13px;font-weight:500;color:var(--ink)}
+.t-role{font-size:11px;color:var(--ink-light)}
+
+/* FORM */
+.form-card{background:var(--off);border:1.5px solid var(--border);border-radius:var(--rxl);padding:40px 36px}
+.form-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.form-sub{font-size:13px;color:var(--ink-light);margin-bottom:28px}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:12px;font-weight:500;color:var(--ink-mid);letter-spacing:.3px;margin-bottom:6px;text-transform:uppercase}
+.form-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--white);transition:border-color .2s;outline:none}
+.form-input:focus{border-color:var(--green)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.session-select-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.session-select-item{border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:all .2s;background:var(--white)}
+.session-select-item:hover{border-color:var(--green-mid)}
+.session-select-item.selected{border-color:var(--green);background:var(--green-light)}
+.ssi-duration{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--ink)}
+.ssi-price{font-size:13px;color:var(--green);font-weight:500}
+.ssi-market{font-size:11px;color:var(--ink-hint);margin-top:2px}
+.form-submit{width:100%;padding:15px;background:var(--green);color:var(--white);border:none;border-radius:var(--r);font-family:'Syne',sans-serif;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:all .2s;margin-top:8px}
+.form-submit:hover{background:var(--green-mid);transform:translateY(-1px);box-shadow:0 8px 24px rgba(10,92,69,.25)}
+.form-note{font-size:12px;color:var(--ink-hint);text-align:center;margin-top:12px}
+.success-state{display:none;text-align:center;padding:40px 24px}
+.success-icon{width:64px;height:64px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+.success-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--green);margin-bottom:8px}
+.success-sub{font-size:14px;color:var(--ink-light)}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 5vw;text-align:center}
+.footer-logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:#7de0ba}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:20px;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-note{font-size:12px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .6s ease both}
+.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}.delay-4{animation-delay:.4s}
+
+@media(max-width:900px){
+  .hero-inner,.booking-layout{grid-template-columns:1fr}
+  .hero-card{border-radius:var(--rxl)}
+  .booking-why{position:static}
+  .form-row,.session-select-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .hero{padding:60px 5vw 0}
+  .sessions-section,.included-section,.booking-section{padding:60px 5vw}
+  .form-card{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Away<span>Techs</span></div>
+    <a href="#book" class="nav-cta">Book a session →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="fade-up">
+      <div class="hero-eyebrow">Career Consulting · Remote Jobs · Global Opportunities</div>
+      <h1>Land your <em>dream remote</em> job with a global company</h1>
+      <p class="hero-sub">1-on-1 career consulting sessions with a Talent Acquisition Specialist who has helped professionals across Nepal and globally break into top international companies.</p>
+      <div class="hero-proof">
+        <span class="company-pill">Meta</span>
+        <span class="company-pill">Amazon</span>
+        <span class="company-pill">Nike</span>
+        <span class="company-pill">Figma</span>
+        <span class="company-pill">Canva</span>
+        <span class="company-pill">Wipro</span>
+        <span class="company-pill">Clipboard Health</span>
+        <span class="company-pill">Cybereason</span>
+        <span class="company-pill">Juicebox</span>
+        <span class="company-pill">Splash</span>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Years in talent acquisition</div>
+        </div>
+        <div>
+          <div class="stat-num">200+</div>
+          <div class="stat-label">Candidates coached</div>
+        </div>
+        <div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Global companies</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card fade-up delay-2">
+      <div class="hero-card-title">Book your session</div>
+      <div class="hero-card-sub">Choose a session below and fill the quick form</div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:32px">
+        <a href="#book" style="display:flex;align-items:center;justify-content:space-between;background:var(--green-light);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;text-decoration:none">
+          <div><div style="font-weight:600;color:var(--ink);font-size:14px">30 min session</div><div style="font-size:12px;color:var(--ink-light)">Nepal</div></div>
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--green)">NPR 500</div>
+        </a>
+        <a href="#book" style="display:flex;align-items:center;justify-content:space-between;background:var(--green);border-radius:var(--r);padding:14px 18px;text-decoration:none">
+          <div><div style="font-weight:600;color:#fff;font-size:14px">1 hour session</div><div style="font-size:12px;color:rgba(255,255,255,.6)">Nepal</div></div>
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#7de0ba">NPR 1,000</div>
+        </a>
+        <a href="#book" style="display:flex;align-items:center;justify-content:space-between;background:var(--gold-light);border:1px solid #e8d0a0;border-radius:var(--r);padding:14px 18px;text-decoration:none">
+          <div><div style="font-weight:600;color:var(--ink);font-size:14px">45 min session</div><div style="font-size:12px;color:var(--ink-light)">International</div></div>
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--gold)">$15</div>
+        </a>
+        <a href="#book" style="display:flex;align-items:center;justify-content:space-between;background:var(--gold);border-radius:var(--r);padding:14px 18px;text-decoration:none">
+          <div><div style="font-weight:600;color:#fff;font-size:14px">1 hour full session</div><div style="font-size:12px;color:rgba(255,255,255,.65)">International</div></div>
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff">$20</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSIONS -->
+<section class="sessions-section">
+  <div class="section-inner">
+    <div class="section-label">Session options</div>
+    <h2 class="section-title">Pick the right session for you</h2>
+    <p class="section-sub">Every session is 100% personalised to your background, your goals, and the companies you want to work for.</p>
+    <div class="sessions-grid">
+
+      <div class="session-card">
+        <div class="session-flag">🇳🇵 Nepal</div>
+        <div class="session-duration">30 min</div>
+        <div class="session-price">NPR 500</div>
+        <ul class="session-features">
+          <li>Resume quick audit</li>
+          <li>LinkedIn headline & summary review</li>
+          <li>Top 3 action items to apply immediately</li>
+          <li>Remote job search direction</li>
+        </ul>
+        <button class="session-btn" onclick="selectSessionAndScroll('30-NPR','NPR 500')">Book this session</button>
+      </div>
+
+      <div class="session-card popular">
+        <div class="popular-badge">Most popular</div>
+        <div class="session-flag">🇳🇵 Nepal</div>
+        <div class="session-duration">1 hour</div>
+        <div class="session-price">NPR 1,000</div>
+        <ul class="session-features">
+          <li>Full resume transformation</li>
+          <li>LinkedIn profile overhaul</li>
+          <li>Personalized remote job strategy</li>
+          <li>Interview prep & pipeline building</li>
+          <li>Salary & market guidance</li>
+          <li>Step-by-step action plan</li>
+        </ul>
+        <button class="session-btn" onclick="selectSessionAndScroll('60-NPR','NPR 1,000')">Book this session</button>
+      </div>
+
+      <div class="session-card">
+        <div class="session-flag">🌍 International</div>
+        <div class="session-duration">45 min</div>
+        <div class="session-price">$15</div>
+        <ul class="session-features">
+          <li>Resume & LinkedIn optimization</li>
+          <li>Remote job search strategy</li>
+          <li>Mindset shift for global hiring</li>
+          <li>Recruiter connection guidance</li>
+        </ul>
+        <button class="session-btn" onclick="selectSessionAndScroll('45-USD','$15')">Book this session</button>
+      </div>
+
+      <div class="session-card">
+        <div class="session-flag">🌍 International</div>
+        <div class="session-duration">1 hour</div>
+        <div class="session-price">$20</div>
+        <ul class="session-features">
+          <li>Complete career transformation session</li>
+          <li>Resume & LinkedIn full rebuild</li>
+          <li>Global mindset & positioning</li>
+          <li>Sponsored role strategy (UK, CA, DE, AU)</li>
+          <li>Interview pipeline & preparation</li>
+          <li>Direct recruiter introductions</li>
+        </ul>
+        <button class="session-btn" onclick="selectSessionAndScroll('60-USD','$20')">Book this session</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section class="included-section">
+  <div class="section-inner">
+    <div class="section-label">What you get</div>
+    <h2 class="section-title">Everything covered in your session</h2>
+    <div class="includes-grid">
+      <div class="include-item">
+        <div class="include-icon">📄</div>
+        <div class="include-title">Resume overhaul</div>
+        <div class="include-desc">Rebuilt around measurable impact, not just responsibilities. Written for global recruiters.</div>
+      </div>
+      <div class="include-item">
+        <div class="include-icon">💼</div>
+        <div class="include-title">LinkedIn optimization</div>
+        <div class="include-desc">Profile that makes recruiters reach out to you first. Headline, summary, keywords — all of it.</div>
+      </div>
+      <div class="include-item">
+        <div class="include-icon">🌐</div>
+        <div class="include-title">Remote job strategy</div>
+        <div class="include-desc">Targeted list of remote-first companies and how to apply effectively — not just mass applying.</div>
+      </div>
+      <div class="include-item">
+        <div class="include-icon">🎯</div>
+        <div class="include-title">Interview preparation</div>
+        <div class="include-desc">How global companies interview. Async formats, behavioural questions, technical rounds.</div>
+      </div>
+      <div class="include-item">
+        <div class="include-icon">💰</div>
+        <div class="include-title">Salary guidance</div>
+        <div class="include-desc">Real market rates in USD, GBP, CAD, EUR. Know your worth before you negotiate.</div>
+      </div>
+      <div class="include-item">
+        <div class="include-icon">🤝</div>
+        <div class="include-title">Recruiter connections</div>
+        <div class="include-desc">Direct introductions to recruiters hiring in your field and region.</div>
+      </div>
+      <div class="include-item">
+        <div class="include-icon">🛂</div>
+        <div class="include-title">Visa sponsorship guide</div>
+        <div class="include-desc">UK, Canada, Germany, Australia pathways explained. Know which roles sponsor and how to apply.</div>
+      </div>
+      <div class="include-item">
+        <div class="include-icon">🗺️</div>
+        <div class="include-title">Personalised action plan</div>
+        <div class="include-desc">A clear, step-by-step roadmap built specifically for your background and target companies.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANIES -->
+<section class="companies-section">
+  <div class="companies-header">
+    <div class="ticker-label">✦ Proven track record</div>
+    <h2 class="companies-title">Candidates coached into interviews & offers at</h2>
+    <p class="companies-sub">Real companies. Real results. Interviews and offers secured by Away Techs candidates.</p>
+  </div>
+  <div class="ticker-wrapper">
+    <div class="ticker-track">
+      <div class="ticker-row" id="ticker-row-1">
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/meta.com" alt="Meta logo" onerror="this.style.display='none'"><span>Meta</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/amazon.com" alt="Amazon logo" onerror="this.style.display='none'"><span>Amazon</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/nike.com" alt="Nike logo" onerror="this.style.display='none'"><span>Nike</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/figma.com" alt="Figma logo" onerror="this.style.display='none'"><span>Figma</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/canva.com" alt="Canva logo" onerror="this.style.display='none'"><span>Canva</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/wipro.com" alt="Wipro logo" onerror="this.style.display='none'"><span>Wipro</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/clipboardhealth.com" alt="Clipboard Health logo" onerror="this.style.display='none'"><span>Clipboard Health</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/cybereason.com" alt="Cybereason logo" onerror="this.style.display='none'"><span>Cybereason</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/splashthat.com" alt="Splash logo" onerror="this.style.display='none'"><span>Splash</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/withjuicebox.com" alt="Juicebox logo" onerror="this.style.display='none'"><span>Juicebox</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/meta.com" alt="Meta logo" onerror="this.style.display='none'"><span>Meta</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/amazon.com" alt="Amazon logo" onerror="this.style.display='none'"><span>Amazon</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/nike.com" alt="Nike logo" onerror="this.style.display='none'"><span>Nike</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/figma.com" alt="Figma logo" onerror="this.style.display='none'"><span>Figma</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/canva.com" alt="Canva logo" onerror="this.style.display='none'"><span>Canva</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/wipro.com" alt="Wipro logo" onerror="this.style.display='none'"><span>Wipro</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/clipboardhealth.com" alt="Clipboard Health logo" onerror="this.style.display='none'"><span>Clipboard Health</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/cybereason.com" alt="Cybereason logo" onerror="this.style.display='none'"><span>Cybereason</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/splashthat.com" alt="Splash logo" onerror="this.style.display='none'"><span>Splash</span></div>
+        <div class="company-logo-card"><img src="https://logo.clearbit.com/withjuicebox.com" alt="Juicebox logo" onerror="this.style.display='none'"><span>Juicebox</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="booking-section" id="book">
+  <div class="booking-layout">
+    <div class="booking-why">
+      <div class="section-label">Book your session</div>
+      <h2 class="booking-why-title">One conversation can change the direction of your career</h2>
+      <p class="booking-why-sub">3+ years as a Talent Acquisition Specialist. 200+ candidates coached. Real results at companies like Meta, Amazon, Figma, and Canva. This session is built entirely around you.</p>
+      <div class="testimonial-card">
+        <div class="testimonial-text">"I had been applying for 6 months with zero responses. After one hour with Away Techs, I had 4 international interviews lined up within 8 weeks. Now working remotely for a US company."</div>
+        <div class="testimonial-author">
+          <div class="t-avatar">AS</div>
+          <div><div class="t-name">Anish S.</div><div class="t-role">Software Engineer, Kathmandu</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-text">"The LinkedIn optimization alone tripled my recruiter messages in two weeks. Highly recommend the 1-hour international session."</div>
+        <div class="testimonial-author">
+          <div class="t-avatar">PT</div>
+          <div><div class="t-name">Priya T.</div><div class="t-role">UI/UX Designer</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div id="form-view">
+        <div class="form-title">Book your session</div>
+        <div class="form-sub">Fill in your details and we'll confirm your slot within 24 hours</div>
+
+        <div class="form-group">
+          <label class="form-label">Select your session</label>
+          <div class="session-select-grid" id="session-grid">
+            <div class="session-select-item" onclick="selectSession(this,'30-NPR','NPR 500')">
+              <div class="ssi-duration">30 min</div>
+              <div class="ssi-price">NPR 500</div>
+              <div class="ssi-market">🇳🇵 Nepal</div>
+            </div>
+            <div class="session-select-item" onclick="selectSession(this,'60-NPR','NPR 1,000')">
+              <div class="ssi-duration">1 hour</div>
+              <div class="ssi-price">NPR 1,000</div>
+              <div class="ssi-market">🇳🇵 Nepal</div>
+            </div>
+            <div class="session-select-item" onclick="selectSession(this,'45-USD','$15')">
+              <div class="ssi-duration">45 min</div>
+              <div class="ssi-price">$15</div>
+              <div class="ssi-market">🌍 International</div>
+            </div>
+            <div class="session-select-item" onclick="selectSession(this,'60-USD','$20')">
+              <div class="ssi-duration">1 hour full</div>
+              <div class="ssi-price">$20</div>
+              <div class="ssi-market">🌍 International</div>
+            </div>
+          </div>
+          <input type="hidden" id="selected-session" value="">
+          <input type="hidden" id="selected-fee" value="">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full name</label>
+            <input class="form-input" type="text" id="f-name" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" id="f-email" placeholder="you@email.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">WhatsApp / Phone</label>
+            <input class="form-input" type="text" id="f-phone" placeholder="+977 or +1...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your profession</label>
+            <select class="form-input" id="f-role">
+              <option value="">Select your role</option>
+              <option>Software engineer</option>
+              <option>UI/UX designer</option>
+              <option>Product manager</option>
+              <option>Project manager</option>
+              <option>HR / operations</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Preferred date</label>
+            <input class="form-input" type="date" id="f-date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred time</label>
+            <input class="form-input" type="time" id="f-time">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Your main goal</label>
+          <textarea class="form-input" id="f-goal" rows="3" placeholder="e.g. I want to land a remote software engineering role in the US or UK. I have 3 years of experience and have been applying for 2 months with no responses."></textarea>
+        </div>
+
+        <button class="form-submit" onclick="submitForm()">Confirm my booking →</button>
+        <div class="form-note">We will confirm your slot via email within 24 hours. Payment details shared on confirmation.</div>
+      </div>
+
+      <div class="success-state" id="success-view">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Booking received!</div>
+        <p class="success-sub">Thank you <strong id="success-name"></strong>. We'll confirm your session slot within 24 hours via email. Get ready — your global career journey starts here.</p>
+        <div style="margin-top:24px;padding:16px;background:var(--green-light);border-radius:var(--r);font-size:13px;color:var(--ink-mid)">
+          📧 For faster confirmation, email us at <strong>awaytechs.hr@gmail.com</strong> or message us on LinkedIn at <strong>Away Techs</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Away<span>Techs</span></div>
+  <div class="footer-links">
+    <a href="#book">Book a session</a>
+    <a href="#book">Sessions & pricing</a>
+    <a href="https://linkedin.com/company/awaytechs" target="_blank">LinkedIn</a>
+  </div>
+  <p class="footer-note">© 2026 Away Techs. Helping professionals across Nepal and globally land remote jobs with international companies.</p>
+</footer>
+
+<script>
+let selectedType='',selectedFee='';
+
+function selectSession(el,type,fee){
+  document.querySelectorAll('.session-select-item').forEach(i=>i.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedType=type;selectedFee=fee;
+  document.getElementById('selected-session').value=type;
+  document.getElementById('selected-fee').value=fee;
+}
+
+function selectSessionAndScroll(type,fee){
+  document.getElementById('book').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const items=document.querySelectorAll('.session-select-item');
+    const map={'30-NPR':0,'60-NPR':1,'45-USD':2,'60-USD':3};
+    if(map[type]!==undefined){selectSession(items[map[type]],type,fee)}
+  },600);
+}
+
+// =============================================
+// AWAY TECHS — BOOKING EMAIL SETUP
+// =============================================
+// STEP 1: Go to https://formspree.io
+// STEP 2: Sign up for free
+// STEP 3: Click "New Form" → name it "Away Techs Bookings"
+// STEP 4: Set notification email to: awaytechs.hr@gmail.com
+// STEP 5: After creating, Formspree shows you a link like:
+//         https://formspree.io/f/xyzabcde
+//         Copy only the last part (e.g. xyzabcde)
+// STEP 6: Paste it below, replacing YOUR_FORM_ID_HERE
+// =============================================
+const FORMSPREE_ID = 'YOUR_FORM_ID_HERE';
+// =============================================
+
+async function submitForm(){
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const role  = document.getElementById('f-role').value;
+  const date  = document.getElementById('f-date').value;
+  const time  = document.getElementById('f-time').value;
+  const goal  = document.getElementById('f-goal').value;
+
+  if(!name||!email||!role||!date||!selectedType){
+    alert('Please fill in all required fields and select a session type.');
+    return;
+  }
+
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: '🗓️ New Booking: ' + name + ' — ' + selectedType + ' (' + selectedFee + ')',
+        _replyto: email,
+        'Full Name':        name,
+        'Email':            email,
+        'WhatsApp / Phone': phone,
+        'Profession':       role,
+        'Preferred Date':   date,
+        'Preferred Time':   time,
+        'Session Type':     selectedType,
+        'Fee':              selectedFee,
+        'Main Goal':        goal,
+        'Submitted At':     new Date().toLocaleString('en-NP', {timeZone:'Asia/Kathmandu'})
+      })
+    });
+    if(!res.ok) throw new Error('Failed');
+  } catch(e) {
+    // Even if email fails, don't block the user — save locally as backup
+    console.warn('Email notification failed:', e);
+  }
+
+  // Backup: also save in browser storage
+  try {
+    const existing = JSON.parse(localStorage.getItem('at_bookings') || '[]');
+    existing.push({name,email,phone,role,date,time,session:selectedType,fee:selectedFee,goal,submitted:new Date().toISOString()});
+    localStorage.setItem('at_bookings', JSON.stringify(existing));
+  } catch(e){}
+
+  btn.textContent = 'Confirm my booking →';
+  btn.disabled = false;
+  document.getElementById('form-view').style.display = 'none';
+  document.getElementById('success-name').textContent = name.split(' ')[0];
+  document.getElementById('success-view').style.display = 'block';
+}
+
+// Set min date to today
+const today=new Date().toISOString().split('T')[0];
+document.getElementById('f-date').min=today;
+</script>
+</body>
+</html>
