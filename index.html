@@ -530,21 +530,6 @@ function selectSessionAndScroll(type,fee){
   },600);
 }
 
-// =============================================
-// AWAY TECHS — BOOKING EMAIL SETUP
-// =============================================
-// STEP 1: Go to https://formspree.io
-// STEP 2: Sign up for free
-// STEP 3: Click "New Form" → name it "Away Techs Bookings"
-// STEP 4: Set notification email to: awaytechs.hr@gmail.com
-// STEP 5: After creating, Formspree shows you a link like:
-//         https://formspree.io/f/xyzabcde
-//         Copy only the last part (e.g. xyzabcde)
-// STEP 6: Paste it below, replacing YOUR_FORM_ID_HERE
-// =============================================
-const FORMSPREE_ID = 'YOUR_FORM_ID_HERE';
-// =============================================
-
 async function submitForm(){
   const name  = document.getElementById('f-name').value.trim();
   const email = document.getElementById('f-email').value.trim();
@@ -564,12 +549,13 @@ async function submitForm(){
   btn.disabled = true;
 
   try {
-    const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+    const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
-        _subject: '🗓️ New Booking: ' + name + ' — ' + selectedType + ' (' + selectedFee + ')',
-        _replyto: email,
+        access_key: 'ca5a6c56-a606-4699-87a8-d1aeea3b06e7',
+        subject: '🗓️ New Booking: ' + name + ' — ' + selectedType + ' (' + selectedFee + ')',
+        from_name: 'Away Techs Booking System',
         'Full Name':        name,
         'Email':            email,
         'WhatsApp / Phone': phone,
@@ -584,7 +570,6 @@ async function submitForm(){
     });
     if(!res.ok) throw new Error('Failed');
   } catch(e) {
-    // Even if email fails, don't block the user — save locally as backup
     console.warn('Email notification failed:', e);
   }
 
