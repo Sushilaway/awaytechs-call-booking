@@ -54,7 +54,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(248,253,249,.92);backdrop-
 .session-card:hover{border-color:var(--green-mid);transform:translateY(-3px);box-shadow:0 12px 32px rgba(10,92,69,.1)}
 .session-card:hover::before{opacity:1}
 .session-card.popular{border-color:var(--green);border-width:2px}
-.popular-badge{position:absolute;top:16px;right:16px;background:var(--green);color:var(--white);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+.popular-badge{position:absolute;top:16px;left:16px;right:16px;width:auto;background:var(--green);color:var(--white);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:6px 10px;border-radius:8px;text-align:center}
+.session-card.popular .session-flag{padding-right:0}
 .session-card *{position:relative;z-index:1}
 .session-flag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 .session-duration{font-family:'Syne',sans-serif;font-size:32px;font-weight:700;color:var(--ink);margin-bottom:4px}
@@ -250,6 +251,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 5vw;text-al
 
       <div class="session-card popular">
         <div class="popular-badge">Most popular</div>
+        <div style="height:32px"></div>
         <div class="session-flag">🇳🇵 Nepal</div>
         <div class="session-duration">1 hour</div>
         <div class="session-price">NPR 1,000</div>
